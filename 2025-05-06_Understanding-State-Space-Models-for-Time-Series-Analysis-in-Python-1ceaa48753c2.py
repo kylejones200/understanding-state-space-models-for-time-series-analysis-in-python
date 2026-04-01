@@ -17,12 +17,12 @@ logging.basicConfig(
 )
 
 
-State:        xₜ = xₜ₋₁ + wₜ
+State:        xₜ = xₜ-1 + wₜ
 Observation:  yₜ = xₜ + vₜ
 
 MAE   = 9,177
 RMSE  = 11,608
-MAPE  = 5.02%
+# MAPE  = 5.02%
 
 
 def run_ucm(df, series_name, title):
