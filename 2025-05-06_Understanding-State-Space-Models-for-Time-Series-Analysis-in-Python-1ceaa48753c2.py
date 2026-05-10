@@ -25,7 +25,7 @@ RMSE  = 11,608
 # MAPE  = 5.02%
 
 
-def run_ucm(df, series_name, title):
+def run_ucm(df, series_name, title, plot: bool = False):
     series = df[series_name].dropna()
 
     model = UnobservedComponents(series, level='local level')
@@ -36,35 +36,36 @@ def run_ucm(df, series_name, title):
     mean = pred.predicted_mean
     ci = pred.conf_int()
 
-    fig, axes = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
-    fig.suptitle(f'State-Space Model for {title}', fontsize=16)
+    if plot:
+        fig, axes = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
+        fig.suptitle(f'State-Space Model for {title}', fontsize=16)
 
     # Plot observed vs predicted
-    axes[0].plot(series.index, series, label='Observed', color='black', linewidth=1)
-    axes[0].plot(mean.index, mean, label='One-step-ahead predictions', color='steelblue')
-    axes[0].fill_between(mean.index, ci.iloc[:, 0], ci.iloc[:, 1], color='steelblue', alpha=0.3)
-    axes[0].legend()
-    axes[0].set_title('Predicted vs observed')
+        axes[0].plot(series.index, series, label='Observed', color='black', linewidth=1)
+        axes[0].plot(mean.index, mean, label='One-step-ahead predictions', color='steelblue')
+        axes[0].fill_between(mean.index, ci.iloc[:, 0], ci.iloc[:, 1], color='steelblue', alpha=0.3)
+        axes[0].legend()
+        axes[0].set_title('Predicted vs observed')
 
     # Extract smoothed level from results.smoothed_state
-    smoothed_level = results.smoothed_state[0]  # Index 0 is level component
-    smoothed_index = series.index
+        smoothed_level = results.smoothed_state[0]  # Index 0 is level component
+        smoothed_index = series.index
 
     # Smoothed level confidence intervals
-    level_var = results.smoothed_state_cov[0, 0, :]  # variance of level
-    level_std = np.sqrt(level_var)
-    lower = smoothed_level - 1.96 * level_std
-    upper = smoothed_level + 1.96 * level_std
+        level_var = results.smoothed_state_cov[0, 0, :]  # variance of level
+        level_std = np.sqrt(level_var)
+        lower = smoothed_level - 1.96 * level_std
+        upper = smoothed_level + 1.96 * level_std
 
-    axes[1].plot(smoothed_index, smoothed_level, label='Level (smoothed)', color='steelblue')
-    axes[1].fill_between(smoothed_index, lower, upper, color='steelblue', alpha=0.3)
-    axes[1].set_title('Level component')
-    axes[1].legend()
+        axes[1].plot(smoothed_index, smoothed_level, label='Level (smoothed)', color='steelblue')
+        axes[1].fill_between(smoothed_index, lower, upper, color='steelblue', alpha=0.3)
+        axes[1].set_title('Level component')
+        axes[1].legend()
 
-    plt.tight_layout()
-    plt.subplots_adjust(top=0.90)
-    plt.savefig(f'statespace_{series_name.lower()}.png')
-    plt.show()
+        plt.tight_layout()
+        plt.subplots_adjust(top=0.90)
+        plt.savefig(f'statespace_{series_name.lower()}.png')
+        plt.show()
 
     # Error metrics
     observed = series.loc[mean.index].dropna()
