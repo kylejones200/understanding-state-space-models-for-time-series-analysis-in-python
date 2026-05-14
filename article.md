@@ -2,7 +2,7 @@
 
 How to track hidden trends in noisy data
 ### Understanding State Space Models for Time Series Analysis in Python
-#### **How to track hidden trends in noisy data**
+#### How to track hidden trends in noisy data
 Time series data is (usually) messy. When you look at a chart, you know there's a pattern underneath the jittery line. But it's hard to see.
 
 State space models help pull that pattern out by separating the hidden structure from the observed noise. You model both the signal and the noise. One equation tracks how the underlying process changes. The other explains how that process produces what you actually measure.
