@@ -1,0 +1,14 @@
+[project]
+name = "understanding-state-space-models-for-time-series-a"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.10.9",
+    "numpy>=2.4.4",
+    "pandas>=3.0.3",
+    "pillow>=12.2.0",
+    "ruptures>=1.1.10",
+    "scikit-learn>=1.8.0",
+    "seaborn>=0.13.2",
+    "statsmodels>=0.14.6",
+]
