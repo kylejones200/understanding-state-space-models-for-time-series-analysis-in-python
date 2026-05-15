@@ -8,7 +8,6 @@ from statsmodels.tsa.statespace.structural import UnobservedComponents
 import logging
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
